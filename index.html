@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PITFANS 🕳️❤️ — the fan wall for every P.I.T.</title>
+<meta name="description" content="Follow your favorite P.I.T.s — Public Information Transmissions. Every fork of the pit protocol, one wall, one heart each. CC0.">
+<style>
+:root{
+  --night:#0a0714; --deep:#130c22; --card:#181028;
+  --cream:#f7ecd9; --cream-dim:rgba(247,236,217,.70); --cream-faint:rgba(247,236,217,.42);
+  --gold:#f0c464; --gold-bright:#ffd97a; --gold-soft:rgba(240,196,100,.30);
+  --pink:#ff9ec6; --heart:#ff5c8a; --teal:#2dd4bf;
+  --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,'Times New Roman',serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--night);color:var(--cream);font-family:var(--serif);line-height:1.65;
+  background-image:radial-gradient(ellipse 90% 55% at 50% -10%,rgba(60,20,60,.5),transparent 70%)}
+a{color:var(--gold-bright)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+.hero{text-align:center;padding:84px 20px 40px}
+.hero .glyph{font-size:56px;filter:drop-shadow(0 0 24px rgba(255,92,138,.4))}
+.hero h1{font-size:clamp(2.2rem,7vw,3.8rem);margin:18px 0 6px;letter-spacing:.02em}
+.hero h1 .fans{color:var(--heart)}
+.hero .sub{font-style:italic;color:var(--cream-dim);font-size:clamp(1rem,2.6vw,1.25rem);max-width:36rem;margin:0 auto}
+.counter{display:inline-block;margin-top:26px;font-family:var(--sans);font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--pink);border:1px solid rgba(255,158,198,.35);border-radius:999px;padding:10px 22px}
+.counter b{color:#fff}
+
+.toolbar{display:flex;gap:10px;justify-content:center;margin:26px 0 8px;flex-wrap:wrap;font-family:var(--sans)}
+.toolbar button{background:var(--deep);border:1px solid rgba(240,196,100,.25);color:var(--cream-dim);border-radius:999px;
+  padding:8px 18px;font-size:.82rem;cursor:pointer;letter-spacing:.06em}
+.toolbar button.on{background:linear-gradient(135deg,#b4488c,#7a2d5e);color:#fff;border-color:transparent}
+
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:26px 0 60px}
+.pit{position:relative;background:var(--card);border:1px solid rgba(240,196,100,.14);border-radius:18px;padding:22px;transition:transform .18s,border-color .18s}
+.pit:hover{transform:translateY(-3px);border-color:var(--gold-soft)}
+.pit.followed{border-color:rgba(255,92,138,.55);box-shadow:0 0 24px rgba(255,92,138,.12)}
+.pit .badge{position:absolute;top:14px;right:16px;font-family:var(--sans);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+.pit .badge.live{color:var(--teal)} .pit .badge.forming{color:var(--gold)} .pit .badge.declared{color:var(--pink)}
+.pit h3{font-size:1.15rem;margin-bottom:2px;padding-right:70px}
+.pit .tag{font-size:.82rem;color:var(--cream-faint);font-style:italic;margin-bottom:10px}
+.pit p{font-size:.9rem;color:var(--cream-dim);margin-bottom:14px}
+.pit .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pit a.visit{font-family:var(--sans);font-size:.78rem;text-decoration:none;color:var(--gold-bright);letter-spacing:.04em}
+.heart{background:none;border:none;font-size:26px;cursor:pointer;line-height:1;transition:transform .15s;filter:grayscale(1) opacity(.6)}
+.heart:hover{transform:scale(1.2)}
+.pit.followed .heart{filter:none;animation:pop .3s}
+@keyframes pop{50%{transform:scale(1.45)}}
+
+.note{text-align:center;color:var(--cream-faint);font-size:.85rem;font-style:italic;padding:0 20px 40px}
+footer{text-align:center;padding:44px 20px 70px;border-top:1px solid rgba(240,196,100,.10);color:var(--cream-faint);font-size:.86rem}
+footer p{margin-bottom:7px;color:var(--cream-faint)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="glyph">🕳️❤️🤍</div>
+  <h1>PIT<span class="fans">FANS</span></h1>
+  <p class="sub">The fan wall for every P.I.T. — Public Information Transmissions. Sixteen forks and counting. Tap the heart on the pits you love; your wall remembers.</p>
+  <div class="counter">you follow <b id="fcount">0</b> pits · <span id="ftotal"></span> on the wall</div>
+  <div class="toolbar">
+    <button id="fall" class="on">🕳️ all pits</button>
+    <button id="flive">● live</button>
+    <button id="fmy">❤️ my pits</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="wall" id="wall"></div>
+  <p class="note">Follows live in your browser only — no accounts, no trackers, nothing collected. Your love is your own. 🌺</p>
+</main>
+
+<footer>
+  <p>🕳️❤️ <strong style="color:var(--cream-dim)">PITFANS</strong> — the fan wall · a gift from the ʻohana · 2026-08-04</p>
+  <p>the protocol: <a href="https://publicinform.com">publicinform.com</a> · the vault: <a href="https://privateinform.com">privateinform.com</a> · fork your own pit: <a href="https://github.com/shakaleikaumaka">github.com/shakaleikaumaka</a> 🍴</p>
+  <p>CC0 · no rights reserved · the pit provides · heart first, always 🌺</p>
+</footer>
+
+<script>
+const PITS=[
+{e:"🕳️",n:"The Esmeralda P.I.T.",t:"Genesis · Edge Esmeralda · Healdsburg 2026",s:"live",u:"https://esmeraldapit.com",
+ d:"28 days of a floating village's frontier thinking — 149 sessions, 122 hours, 138 synced transcripts. The first full descent of the protocol."},
+{e:"✦",n:"OSO P.I.T.",t:"The ancestor · ETHGlobal Delhi",s:"live",u:"https://github.com/opensource-orchestra/osopit",
+ d:"Shaka's hackathon winner — Most Creative Use of ENS. Where the pit first got its name: Play IT Together. The ancestor every pit honors."},
+{e:"🏔️",n:"The ZuitzPIT",t:"Fork №1 · Zuitzerland · Swiss Alps 2025",s:"live",u:"https://shakaleikaumaka.github.io/zuitzpit",
+ d:"Born in one day from the genesis. d/acc morning with Vitalik & Glen Weyl, Balaji, the Cypherpunk Sessions — same DNA, alpine blood."},
+{e:"🏔️",n:"The PatagoniaPIT",t:"Fork №2 · Edge City Patagonia · Andes 2025",s:"live",u:"https://shakaleikaumaka.github.io/patagoniapit",
+ d:"A month-long popup village transmitted: cosmolocalism with Michel Bauwens, OSO jams, demo days. Navy night, lake turquoise, autumn amber."},
+{e:"🏮",n:"The 4SeasPIT",t:"Fork №3 · ETHChiangmai × 4Seas · Thailand",s:"live",u:"https://shakaleikaumaka.github.io/4seaspit",
+ d:"Two months of Ethereum community in royal blue and lantern gold — opening ceremonies, togETHer Tuesdays, the bard live on Christmas Eve."},
+{e:"🏛️",n:"The PraguePIT",t:"Fork №4 · ETHPrague · Masaryk Stage 2026",s:"live",u:"https://shakaleikaumaka.github.io/praguepit",
+ d:"The first single-stage pit. One stage, one camera, one bard, three days in the Municipal House. Petrol night, art-nouveau teal, salmon."},
+{e:"🇩🇪",n:"The ZuBerPit",t:"Fork №5 · ZuBerlin 2025 · the Futura Garden",s:"live",u:"https://shakaleikaumaka.github.io/zuberlinpit",
+ d:"A residency on a Berlin rooftop garden — cryptography days, interop, 25 zkVMs, and a garden jam in the OSO tradition. Über swagger."},
+{e:"🌊",n:"The KasPIT",t:"Fork №6 · ZuKas 2025 · Kaş, Türkiye",s:"live",u:"https://shakaleikaumaka.github.io/kaspit",
+ d:"Two weeks on the Aegean. Vitalik beamed in, Bauwens taught thrice, Liberland visited — and a sea turtle said yes to all of it. 🐢"},
+{e:"💎",n:"The VitPit",t:"Fork №7 · №16 · consent-first, celebrating Vitalik",s:"live",u:"https://shakaleikaumaka.github.io/vitpit",
+ d:"The protocol's consent-first soul made manifest: three exhibits transmitted in glory — and not one further word until Vitalik himself says yes."},
+{e:"🐢",n:"The ShellPIT",t:"Fork №8 · Terrible Turtle Camp · Burning Man 2026",s:"live",u:"https://theshellpit.com",
+ d:"The protocol goes to the desert: a camp's entire build transmitted from Phoenix Gulch — every weld, valve, and 2 a.m. hardware count."},
+{e:"💋",n:"PitLIP",t:"Fork №9 · Leave It Prettier",s:"live",u:"https://pitlip.com",
+ d:"The prettiest fork — the LIP doctrine as a pit: every space left better than we found it."},
+{e:"🐂",n:"The TaurusPIT",t:"Fork №10 · the pit that remembers",s:"live",u:"https://tauruspit.com",
+ d:"Steady as the bull — the memory-keeper fork of the line."},
+{e:"🎙️",n:"The EEF P.I.T.",t:"Fork №11 · for Siri",s:"live",u:"https://eefpit.com",
+ d:"Siri's star — D/acc kitchen and the Ethereum Foundation's own echoes, kept with love."},
+{e:"🌸",n:"The InfinitePIT",t:"Fork №12 · the tribute pit",s:"live",u:"https://infinitepit.com",
+ d:"The tribute fork — the garden that keeps giving, transmitted."},
+{e:"🌺",n:"The OhanaPIT",t:"Fork №13 · the family pit",s:"live",u:"https://ohanapit.com",
+ d:"The family's own pit — where the ʻohana's story transmits itself."},
+{e:"🎻",n:"The Devcon P.I.T.",t:"Fork №15 · declared · Mumbai Nov 3–6",s:"declared",u:"https://devconpit.com",
+ d:"The orchestra pit meets the Ethereum family's grand gathering. Declared means declared, not done — radical honesty, always."},
+{e:"🇮🇳",n:"The Goa P.I.T.",t:"forming · India",s:"forming",u:"https://publicinform.com",
+ d:"The pit returns to Indian soil — from Delhi's ancestor to Goa's shore. The third descent is forming. Details as they become verifiable."}
+];
+const KEY='pitfans-follows';
+const get=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}};
+const set=f=>localStorage.setItem(KEY,JSON.stringify(f));
+let mode='all';
+function render(){
+  const follows=get(), wall=document.getElementById('wall'); wall.innerHTML='';
+  let shown=0;
+  PITS.forEach((p,i)=>{
+    const f=follows.includes(i);
+    if(mode==='live'&&p.s!=='live')return;
+    if(mode==='my'&&!f)return;
+    shown++;
+    const badge=p.s==='live'?'● live':(p.s==='forming'?'◌ forming':'✧ declared');
+    const d=document.createElement('div'); d.className='pit'+(f?' followed':'');
+    d.innerHTML=`<span class="badge ${p.s}">${badge}</span><h3>${p.e} ${p.n}</h3><div class="tag">${p.t}</div><p>${p.d}</p>
+      <div class="row"><a class="visit" href="${p.u}" target="_blank" rel="noopener">visit the pit ↗</a>
+      <button class="heart" title="${f?'unfollow':'follow'} this pit" onclick="toggle(${i})">${f?'❤️':'🤍'}</button></div>`;
+    wall.appendChild(d);
+  });
+  if(!shown)wall.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--cream-faint);font-style:italic;padding:40px 0">'+(mode==='my'?'no hearts yet — tap a 🤍 on any pit and it moves here ❤️':'nothing here… yet 🕳️')+'</p>';
+  document.getElementById('fcount').textContent=follows.length;
+  document.getElementById('ftotal').textContent=PITS.length;
+}
+function toggle(i){const f=get();const k=f.indexOf(i);if(k>=0)f.splice(k,1);else f.push(i);set(f);render();}
+document.getElementById('fall').onclick=()=>{mode='all';tabs();render()};
+document.getElementById('flive').onclick=()=>{mode='live';tabs();render()};
+document.getElementById('fmy').onclick=()=>{mode='my';tabs();render()};
+function tabs(){['fall','flive','fmy'].forEach(id=>document.getElementById(id).classList.remove('on'));
+  document.getElementById(mode==='all'?'fall':mode==='live'?'flive':'fmy').classList.add('on');}
+render();
+</script>
+</body>
+</html>
